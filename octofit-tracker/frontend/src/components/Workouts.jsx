@@ -1,12 +1,22 @@
 import { useEffect, useMemo, useState } from 'react';
-import { getApiBaseUrl, normalizePayload } from '../utils/api.js';
+
+const apiBase = import.meta.env.VITE_CODESPACE_NAME
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
+  : 'http://localhost:8000/api';
+
+function normalizePayload(payload) {
+  if (Array.isArray(payload)) return payload;
+  if (payload && Array.isArray(payload.results)) return payload.results;
+  if (payload && Array.isArray(payload.data)) return payload.data;
+  return [];
+}
 
 export default function Workouts() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const apiUrl = useMemo(() => `${getApiBaseUrl()}/workouts/`, []);
+  const apiUrl = useMemo(() => `${apiBase}/workouts/`, []);
 
   useEffect(() => {
     let active = true;
