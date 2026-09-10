@@ -9,9 +9,9 @@ import { connectDatabase } from './config/database.js';
 const app = express();
 const PORT = Number(process.env.PORT || 8000);
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
-const codepaceName = process.env.CODESPACE_NAME;
-const baseUrl = codepaceName
-  ? `https://${codepaceName}-8000.app.github.dev`
+const codespaceName = process.env.CODESPACE_NAME;
+const baseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000';
 
 app.use(express.json());
