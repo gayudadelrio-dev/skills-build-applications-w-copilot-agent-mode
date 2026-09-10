@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-const apiBase = import.meta.env.VITE_CODESPACE_NAME
-  ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api`
-  : 'http://localhost:8000/api';
+const apiUrl = import.meta.env.VITE_CODESPACE_NAME && import.meta.env.VITE_CODESPACE_NAME.trim() !== ''
+  ? `https://${import.meta.env.VITE_CODESPACE_NAME.trim()}-8000.app.github.dev/api/activities`
+  : 'http://localhost:8000/api/activities';
 
 function normalizePayload(payload) {
   if (Array.isArray(payload)) return payload;
@@ -15,8 +15,6 @@ export default function Activities() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  const apiUrl = useMemo(() => `${apiBase}/activities/`, []);
 
   useEffect(() => {
     let active = true;
